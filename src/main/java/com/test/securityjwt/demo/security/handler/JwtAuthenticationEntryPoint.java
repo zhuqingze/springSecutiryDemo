@@ -1,0 +1,30 @@
+package com.test.securityjwt.demo.security.handler;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.test.securityjwt.demo.security.util.ResultBody;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+@Component
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    @Override
+    public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+        //登录失败信息返回
+        ResultBody resultBody = new ResultBody("1001", "没有token或者token过期:"+e.getLocalizedMessage());
+        //设置返回请求头
+        httpServletResponse.setContentType("application/json;charset=utf-8");
+        //写出流
+        PrintWriter out = httpServletResponse.getWriter();
+        ObjectMapper mapper = new ObjectMapper();
+        out.write(mapper.writeValueAsString(resultBody));
+        out.flush();
+        out.close();
+    }
+}

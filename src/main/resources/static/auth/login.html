@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<body>
+
+<h2>Login</h2>
+<form id="loginForm" action="/authentication/form" method="post">
+    用户：<input type="text" id="username" name="username"><br /><br />
+    密码：<input type="password" id="password" name="password"><br /><br />
+    <button id="btnlogin" type="button">Login</button>
+</form>
+<span id="msg" name="msg"></h2>
+
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $("#btnlogin").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/authentication/form",
+                data: $("#loginForm").serialize(),
+                dataType: "JSON",
+                success: function (data) {
+                    console.log(data);
+                    $("#msg").text(data.message);
+                }
+            });
+
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+server:
+  port: 8033
+spring:
+  application:
+    name: securitytest
+  datasource:
+    tomcat:
+      max-idle: 10
+      min-idle: 5
+      initial-size: 5
+      max-wait: 10000
+    driverClassName: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:arltr
+    username: lark_openapi_lark
+    password: 123456
+    druid:
+      max-active: 18
+      initial-size: 3
+      min-idle: 3
+      max-wait: 250000
+      time-between-eviction-runs-millis: 250000
+      min-evictable-idle-time-millis: 120000
+      validation-query: select 'x' from dual
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      max-open-prepared-statements: 20
+      filter: stat,wall,slf4j
+  redis:
+    lettuce:
+      pool:
+        max-active: 300
+        max-idle: 100
+        max-wait: 5000ms
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
+    database: 7
+    timeout: 5000ms
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+jwt:
+  secret: "this is a secret"
+  #expiration: 1800
+  #注意前面有空格
+  token-head: "Bearer "
+  header-name: "Authorization"
+  access-expiration: 3600
+  roles-expiration: 300
+  refresh-expiration: 604800
